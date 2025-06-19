@@ -32,7 +32,8 @@ sudo dmesg | tail -20                      # Last 20 kernel messages
 sudo dmesg | grep -i error                 # Kernel errors
 ## Check log directory
 ls -la /var/log/
-
+## AI2s version of dcgm
+sudo dcgmdiag 4
 ## Single node rccl-test over GPU fabric (expect 310-320GB/s) 
 mpirun -bind-to numa -map-by slot -np 8 -H localhost:8 -x NCCL_DEBUG=INFO /mnt/cluster/rccl-tests/build/all_reduce_perf -b 8 -e 16G -f 2 --check 1 -g 1
 ## Single node rccl-test over GPU fabric (expect ~43GB/s)
