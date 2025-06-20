@@ -32,8 +32,17 @@ sudo dmesg | tail -20                      # Last 20 kernel messages
 sudo dmesg | grep -i error                 # Kernel errors
 ## Check log directory
 ls -la /var/log/
+## Install, run, and remove DCGM:
+sudo apt install datacenter-gpu-manager
+sudo systemctl start nvidia-dcgm
+sudo systemctl enable nvidia-dcgm
+dcgmi discovery -l
+sudo dcgmi diag -r 3
+sudo apt uninstall datacenter-gpu-manager
 ## AI2s version of dcgm
 sudo dcgmdiag 4
+## Query a GPU for errors:
+nvidia-smi -i 7 --query
 ## Single node rccl-test over GPU fabric (expect 310-320GB/s) 
 mpirun -bind-to numa -map-by slot -np 8 -H localhost:8 -x NCCL_DEBUG=INFO /mnt/cluster/rccl-tests/build/all_reduce_perf -b 8 -e 16G -f 2 --check 1 -g 1
 ## Single node rccl-test over GPU fabric (expect ~43GB/s)
@@ -70,10 +79,10 @@ sudo nvidia-bug-report.sh
 export XAUTHORITY=$HOME/.Xauthority
 ## Then run the bug report.
 ## if nvidia_uvm is ESPECIALLY stubborn to shut down
-lsof /dev/nvidia*
+sudo lsof /dev/nvidia*
 ## Take the PID and kill it
 sudo pkill
-lsof /dev/nvidia*
+sudo lsof /dev/nvidia*
 ## For AI2 systems
 sudo systemctl disable dcgm-exporter && sudo systemctl stop dcgm-exporter
 
