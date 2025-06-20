@@ -38,7 +38,10 @@ sudo systemctl start nvidia-dcgm
 sudo systemctl enable nvidia-dcgm
 dcgmi discovery -l
 sudo dcgmi diag -r 3
-sudo apt uninstall datacenter-gpu-manager
+sudo systemctl stop nvidia-dcgm
+sudo systemctl disable nvidia-dcgm
+sudo apt remove datacenter-gpu-manager
+sudo apt purge datacenter-gpu-manager
 ## AI2s version of dcgm
 sudo dcgmdiag 4
 ## Query a GPU for errors:
