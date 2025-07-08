@@ -84,6 +84,11 @@ unload_nvidia_drivers() {
   
   # Stop ALL related services that might be using NVIDIA
   echo "Stopping NVIDIA and related services..."
+  sudo systemctl disable dcgm-exporter && sudo systemctl stop dcgm-exporter
+  sudo systemctl stop nvidia-fabricmanager.service
+  sudo systemctl stop nvidia-persistenced.service
+  sudo rmmod nvidia_uvm nvidia_peermem nvidia_drm nvidia_modeset nvidia
+  sudo rmmod nvidia_uvm nvidia_peermem nvidia_drm nvidia_modeset nvidia 
   for service in nvidia-fabricmanager.service nvidia-persistenced.service dcgm-exporter.service nvidia-powerd.service \
                  nvidia-dbus.service nvidia-gridd.service nv-hostengine.service docker kubelet containerd; do
     systemctl stop $service 2>/dev/null
@@ -103,7 +108,11 @@ unload_nvidia_drivers() {
   
   # Kill all GPU-utilizing processes more thoroughly
   echo "Killing all processes that might be using NVIDIA devices..."
-  
+  sudo systemctl disable dcgm-exporter && sudo systemctl stop dcgm-exporter
+  sudo systemctl stop nvidia-fabricmanager.service
+  sudo systemctl stop nvidia-persistenced.service
+  sudo rmmod nvidia_uvm nvidia_peermem nvidia_drm nvidia_modeset nvidia
+  sudo rmmod nvidia_uvm nvidia_peermem nvidia_drm nvidia_modeset nvidia 
   # First check with nvidia-smi if available
   if command -v nvidia-smi &> /dev/null; then
     echo "Identifying processes using GPU with nvidia-smi..."
