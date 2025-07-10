@@ -76,6 +76,9 @@ collect_system_logs() {
   # PCIe information
   echo "Collecting PCIe information..."
   lspci -t > "$log_dir/lspci_tree.txt"
+  # FDisk output
+  echo "Collecting disk information..."
+  sudo fdisk -l >"$log_dir/fdisk.txt"
 }
 
 # Function to unload NVIDIA drivers safely

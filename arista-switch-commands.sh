@@ -341,3 +341,6 @@ exit
 interface ethernet 29/4  
 channel-group 293 mode active
 exit
+
+# Check for port flapping in logs
+show logging last 10 hours | grep -i "line protocol\|changed state\|stable\|unstable"

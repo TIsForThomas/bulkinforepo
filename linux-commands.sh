@@ -100,7 +100,8 @@ sudo apt-get autoremove
 sudo reboot
 
 
-
+# Using curl to download and run directly, saving output
+curl -s https://raw.githubusercontent.com/amddcgpuce/rocmtechsupport/master/rocm_techsupport.sh | bash > rocm_output.txt 2>&1
 
 
 
